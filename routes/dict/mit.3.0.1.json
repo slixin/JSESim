@@ -1,0 +1,2006 @@
+{
+  "messages": [
+    {
+      "_type": "0",
+      "_name": "Heartbeat"
+    },
+    {
+      "_type": "3",
+      "_name": "Reject",
+      "_fields": [
+        {
+          "_name": "RejectCode",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "RejectReason",
+          "_length": "30",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "MessageType",
+          "_length": "1",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        }
+      ]
+    },
+    {
+      "_type": "5",
+      "_name": "Logout",
+      "_fields": [
+        {
+          "_name": "Reason",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        }
+      ]
+    },
+    {
+      "_type": "A",
+      "_name": "Logon",
+      "_fields": [
+        {
+          "_name": "CompID",
+          "_length": "6",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Password",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "NewPassword",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        }
+      ]
+    },
+    {
+      "_type": "M",
+      "_name": "Missed Message Request",
+      "_fields": [
+        {
+          "_name": "PartitionId",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "SequenceNumber",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        }
+      ]
+    },
+    {
+      "_type": "D",
+      "_name": "New Order",
+      "_fields": [
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SecurityID",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "TraderMnemonic",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Account",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Market Order"
+            },
+            {
+              "_value": "2",
+              "_name": "Limit Order"
+            },
+            {
+              "_value": "3",
+              "_name": "Stop Order"
+            },
+            {
+              "_value": "4",
+              "_name": "Stop Limit Order"
+            },
+            {
+              "_value": "50",
+              "_name": "Pegged"
+            },
+            {
+              "_value": "51",
+              "_name": "Pegged Limit Order"
+            }
+          ]
+        },
+        {
+          "_name": "TimeInForce",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "Day"
+            },
+            {
+              "_value": "1",
+              "_name": "Good Till Cancel (GTC)"
+            },
+            {
+              "_value": "3",
+              "_name": "Immediate or Cancel (IOC)"
+            },
+            {
+              "_value": "4",
+              "_name": "Fill or Kill (FOK)"
+            },
+            {
+              "_value": "5",
+              "_name": "At the Open (OFG)"
+            },
+            {
+              "_value": "6",
+              "_name": "Good Till Date (GTD)"
+            },
+            {
+              "_value": "8",
+              "_name": "Good Till Time (GTT)"
+            },
+            {
+              "_value": "9",
+              "_name": "Good for Auction (GFA)"
+            },
+            {
+              "_value": "50",
+              "_name": "Good for EOD Volume Auction Uncross (GDX)"
+            },
+            {
+              "_value": "51",
+              "_name": "Good for Intraday (GFX)"
+            },
+            {
+              "_value": "10",
+              "_name": "At the Close (ATC)"
+            },
+            {
+              "_value": "12",
+              "_name": "Closing Price Cross (CPX)"
+            },
+            {
+              "_value": "50",
+              "_name": "Good for EOD Volume Auction Uncorrss (GDX)"
+            }
+          ]
+        },
+        {
+          "_name": "ExpireTime",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Side",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Buy"
+            },
+            {
+              "_value": "2",
+              "_name": "Sell"
+            }
+          ]
+        },
+        {
+          "_name": "OrderQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "DisplayQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "MinimumQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "LimitPrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "StopPrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "Capacity",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "2",
+              "_name": "Principal"
+            },
+            {
+              "_value": "3",
+              "_name": "Agency"
+            }
+          ]
+        },
+        {
+          "_name": "CancelOnDisconnect",
+          "_length": 1,
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "Do Not Cancel"
+            },
+            {
+              "_value": "1",
+              "_name": "Cancel"
+            }
+          ]
+        },
+        {
+          "_name": "OrderBook",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Regular"
+            }
+          ]
+        },
+        {
+          "_name": "ExecutionInstruction",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "-1",
+              "_name": "DEFAULT"
+            },
+            {
+              "_value": "0",
+              "_name": "Do Not Exclude Hidden Orders"
+            },
+            {
+              "_value": "1",
+              "_name": "Exclude Pegged or Pegged Hidden Limit Orders"
+            },
+            {
+              "_value": "2",
+              "_name": "Include in EOD Volume Auction Uncross"
+            }
+          ]
+        },
+        {
+          "_name": "OrderSubType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "50",
+              "_name": "OrdersPegged to Mid"
+            },
+            {
+              "_value": "51",
+              "_name": "Pegged to Bid"
+            },
+            {
+              "_value": "52",
+              "_name": "Pegged to Offer"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "F",
+      "_name": "Order Cancel Request",
+      "_fields": [
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrigClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderID",
+          "_length": "12",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SecurityID",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "TraderMnemonic",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Side",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Buy"
+            },
+            {
+              "_value": "2",
+              "_name": "Sell"
+            }
+          ]
+        },
+        {
+          "_name": "OrderBook",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Regular"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "q",
+      "_name": "Order Mass Cancel Request",
+      "_fields": [
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "MassCancelRequestType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "3",
+              "_name": "All Firm orders for Instrument"
+            },
+            {
+              "_value": "4",
+              "_name": "All Firm orders for Segment"
+            },
+            {
+              "_value": "7",
+              "_name": "All orders for Client (Interface User ID)"
+            },
+            {
+              "_value": "8",
+              "_name": "All orders for Firm"
+            },
+            {
+              "_value": "9",
+              "_name": "Client (Interface User ID) orders for Instrument"
+            },
+            {
+              "_value": "15",
+              "_name": "Client (Interface User ID) orders for Segment"
+            }
+          ]
+        },
+        {
+          "_name": "SecurityID",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "Segment",
+          "_length": "6",
+          "_type": "Alpha",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "ZA01",
+              "_name": "JSE Top Companies"
+            },
+            {
+              "_value": "ZA02",
+              "_name": "JSE Medium Liquid"
+            },
+            {
+              "_value": "ZA03",
+              "_name": "JSE Less Liquid"
+            },
+            {
+              "_value": "ZA04",
+              "_name": "JSE Specialist Products"
+            },
+            {
+              "_value": "ZA06",
+              "_name": "JSE Exchange Traded Products"
+            },
+            {
+              "_value": "ZA11",
+              "_name": "NSX Local Listed Companies"
+            },
+            {
+              "_value": "ZA12",
+              "_name": "NSX Dual Listed Companies"
+            }
+          ]
+        },
+        {
+          "_name": "OrderSubType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "50",
+              "_name": "OrdersPegged to Mid"
+            },
+            {
+              "_value": "51",
+              "_name": "Pegged to Bid"
+            },
+            {
+              "_value": "52",
+              "_name": "Pegged to Offer"
+            }
+          ]
+        },
+        {
+          "_name": "OrderBook",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Regular"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "G",
+      "_name": "Order Cancel/Replace Request",
+      "_fields": [
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrigClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderID",
+          "_length": "12",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SecurityID",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "TraderMnemonic",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Account",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Market Order"
+            },
+            {
+              "_value": "2",
+              "_name": "Limit Order"
+            },
+            {
+              "_value": "3",
+              "_name": "Stop Order"
+            },
+            {
+              "_value": "4",
+              "_name": "Stop Limit Order"
+            },
+            {
+              "_value": "50",
+              "_name": "Pegged"
+            },
+            {
+              "_value": "51",
+              "_name": "Pegged Limit Order"
+            }
+          ]
+        },
+        {
+          "_name": "TimeInForce",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "Day"
+            },
+            {
+              "_value": "1",
+              "_name": "Good Till Cancel (GTC)"
+            },
+            {
+              "_value": "3",
+              "_name": "Immediate or Cancel (IOC)"
+            },
+            {
+              "_value": "4",
+              "_name": "Fill or Kill (FOK)"
+            },
+            {
+              "_value": "5",
+              "_name": "At the Open (OFG)"
+            },
+            {
+              "_value": "6",
+              "_name": "Good Till Date (GTD)"
+            },
+            {
+              "_value": "8",
+              "_name": "Good Till Time (GTT)"
+            },
+            {
+              "_value": "9",
+              "_name": "Good for Auction (GFA)"
+            },
+            {
+              "_value": "50",
+              "_name": "Good for EOD Volume Auction Uncross (GDX)"
+            },
+            {
+              "_value": "51",
+              "_name": "Good for Intraday (GFX)"
+            },
+            {
+              "_value": "10",
+              "_name": "At the Close (ATC)"
+            },
+            {
+              "_value": "12",
+              "_name": "Closing Price Cross (CPX)"
+            },
+            {
+              "_value": "50",
+              "_name": "Good for EOD Volume Auction Uncorrss (GDX)"
+            }
+          ]
+        },
+        {
+          "_name": "ExpireTime",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Side",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Buy"
+            },
+            {
+              "_value": "2",
+              "_name": "Sell"
+            }
+          ]
+        },
+        {
+          "_name": "OrderQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "DisplayQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "MinimumQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "LimitPrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "StopPrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderBook",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Regular"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "C",
+      "_name": "New Order Cross",
+      "_fields": [
+        {
+          "_name": "CrossID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "CrossType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "BuySideClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "BuySideCapacity",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "BuySideTraderMnemonic",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "BuySideAccount",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SellSideClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SellSideCapacity",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "SellSideTraderMnemonic",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SellSideAccount",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SecurityID",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Market Order"
+            },
+            {
+              "_value": "2",
+              "_name": "Limit Order"
+            },
+            {
+              "_value": "3",
+              "_name": "Stop Order"
+            },
+            {
+              "_value": "4",
+              "_name": "Stop Limit Order"
+            },
+            {
+              "_value": "50",
+              "_name": "Pegged"
+            },
+            {
+              "_value": "51",
+              "_name": "Pegged Limit Order"
+            }
+          ]
+        },
+        {
+          "_name": "TimeInForce",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "Day"
+            },
+            {
+              "_value": "1",
+              "_name": "Good Till Cancel (GTC)"
+            },
+            {
+              "_value": "3",
+              "_name": "Immediate or Cancel (IOC)"
+            },
+            {
+              "_value": "4",
+              "_name": "Fill or Kill (FOK)"
+            },
+            {
+              "_value": "5",
+              "_name": "At the Open (OFG)"
+            },
+            {
+              "_value": "6",
+              "_name": "Good Till Date (GTD)"
+            },
+            {
+              "_value": "8",
+              "_name": "Good Till Time (GTT)"
+            },
+            {
+              "_value": "9",
+              "_name": "Good for Auction (GFA)"
+            },
+            {
+              "_value": "50",
+              "_name": "Good for EOD Volume Auction Uncross (GDX)"
+            },
+            {
+              "_value": "51",
+              "_name": "Good for Intraday (GFX)"
+            },
+            {
+              "_value": "10",
+              "_name": "At the Close (ATC)"
+            },
+            {
+              "_value": "12",
+              "_name": "Closing Price Cross (CPX)"
+            },
+            {
+              "_value": "50",
+              "_name": "Good for EOD Volume Auction Uncorrss (GDX)"
+            }
+          ]
+        },
+        {
+          "_name": "LimitPrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        }
+      ]
+    },
+    {
+      "_type": "B",
+      "_name": "Logon Response",
+      "_fields": [
+        {
+          "_name": "RejectCode",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "PasswordExpiry",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 255
+        }
+      ]
+    },
+    {
+      "_type": "N",
+      "_name": "Missed Message Request Ack",
+      "_fields": [
+        {
+          "_name": "Status",
+          "_message": "N",
+          "_length": 1,
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "Request Accepted/Successful"
+            },
+            {
+              "_value": "1",
+              "_name": "Request Limit Reached"
+            },
+            {
+              "_value": "2",
+              "_name": "Invalid Partition ID"
+            },
+            {
+              "_value": "3",
+              "_name": "Service Unavailable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "P",
+      "_name": "Transmission Complete",
+      "_fields": [
+        {
+          "_name": "Status",
+          "_message": "P",
+          "_length": 1,
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "All Messages Transmitted"
+            },
+            {
+              "_value": "1",
+              "_name": "Message Limit Reached"
+            },
+            {
+              "_value": "3",
+              "_name": "Service Unavailable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "8",
+      "_name": "Execution Report",
+      "_fields": [
+        {
+          "_name": "PartitionId",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "SequenceNumber",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "ExecutionID",
+          "_length": "21",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderID",
+          "_length": "12",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "ExecutionType",
+          "_length": "1",
+          "_type": "Alpha",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "New"
+            },
+            {
+              "_value": "4",
+              "_name": "Cancelled"
+            },
+            {
+              "_value": "5",
+              "_name": "Amended/Modified"
+            },
+            {
+              "_value": "8",
+              "_name": "Rejected"
+            },
+            {
+              "_value": "9",
+              "_name": "Suspended"
+            },
+            {
+              "_value": "C",
+              "_name": "Expired"
+            },
+            {
+              "_value": "F",
+              "_name": "Trade"
+            },
+            {
+              "_value": "G",
+              "_name": "Trade Correct"
+            },
+            {
+              "_value": "H",
+              "_name": "Trade Cancel"
+            },
+            {
+              "_value": "D",
+              "_name": "Restated"
+            },
+            {
+              "_value": "L",
+              "_name": "Triggered"
+            }
+          ]
+        },
+        {
+          "_name": "OrderStatus",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "New"
+            },
+            {
+              "_value": "1",
+              "_name": "Partially Filled"
+            },
+            {
+              "_value": "2",
+              "_name": "Filled"
+            },
+            {
+              "_value": "4",
+              "_name": "Cancelled"
+            },
+            {
+              "_value": "6",
+              "_name": "Expired"
+            },
+            {
+              "_value": "8",
+              "_name": "Rejected"
+            },
+            {
+              "_value": "9",
+              "_name": "Suspended"
+            }
+          ]
+        },
+        {
+          "_name": "RejectCode",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "ExecutedPrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "ExecutedQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "LeavesQuantity",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "Container",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "None"
+            },
+            {
+              "_value": "1",
+              "_name": "Main"
+            },
+            {
+              "_value": "3",
+              "_name": "Market Order"
+            },
+            {
+              "_value": "5",
+              "_name": "Parked Order"
+            },
+            {
+              "_value": "6",
+              "_name": "Stop Order"
+            },
+            {
+              "_value": "20",
+              "_name": "Pegged Container"
+            },
+            {
+              "_value": "21",
+              "_name": "EOD Volume Auction Uncross"
+            }
+          ]
+        },
+        {
+          "_name": "SecurityID",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "Side",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Buy"
+            },
+            {
+              "_value": "2",
+              "_name": "Sell"
+            }
+          ]
+        },
+        {
+          "_name": "TraderMnemonic",
+          "_length": "17",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Account",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "IsMarketOpsRequest",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "No"
+            },
+            {
+              "_value": "1",
+              "_name": "Yes"
+            }
+          ]
+        },
+        {
+          "_name": "TransactTime",
+          "_length": "8",
+          "_type": "UInt64",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderBook",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Regular"
+            }
+          ]
+        },
+        {
+          "_name": "ExecutionInstruction",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "Do Not Exclude Hidden Orders"
+            },
+            {
+              "_value": "1",
+              "_name": "Exclude Pegged or Pegged Hidden Limit Orders"
+            },
+            {
+              "_value": "2",
+              "_name": "Include in EOD Volume Auction Uncross"
+            }
+          ]
+        },
+        {
+          "_name": "CrossID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "CrossType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        }
+      ]
+    },
+    {
+      "_type": "Z",
+      "_name": "News",
+      "_fields": [
+        {
+          "_name": "PartitionId",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "SequenceNumber",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "OrigTime",
+          "_length": "8",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Urgency",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "Headline",
+          "_length": "100",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Text",
+          "_length": "750",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Instruments",
+          "_length": "100",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "UnderlyingInstruments",
+          "_length": "100",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "FirmList",
+          "_length": "54",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "UserList",
+          "_length": "54",
+          "_type": "Alpha",
+          "_padding": 0
+        }
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "_name": "CompID",
+      "_length": "6",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "Password",
+      "_length": "10",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "NewPassword",
+      "_length": "10",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "PasswordExpiry",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 255
+    },
+    {
+      "_name": "RejectCode",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "RejectReason",
+      "_length": "30",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "MessageType",
+      "_length": "1",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "ClientOrderID",
+      "_length": "20",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "Reason",
+      "_length": "20",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "PartitionId",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0
+    },
+    {
+      "_name": "SequenceNumber",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "ExecutionID",
+      "_length": "21",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "OrderID",
+      "_length": "12",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "ExecutionType",
+      "_length": "1",
+      "_type": "Alpha",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "New"
+        },
+        {
+          "_value": "4",
+          "_name": "Cancelled"
+        },
+        {
+          "_value": "5",
+          "_name": "Amended/Modified"
+        },
+        {
+          "_value": "8",
+          "_name": "Rejected"
+        },
+        {
+          "_value": "9",
+          "_name": "Suspended"
+        },
+        {
+          "_value": "C",
+          "_name": "Expired"
+        },
+        {
+          "_value": "F",
+          "_name": "Trade"
+        },
+        {
+          "_value": "G",
+          "_name": "Trade Correct"
+        },
+        {
+          "_value": "H",
+          "_name": "Trade Cancel"
+        },
+        {
+          "_value": "D",
+          "_name": "Restated"
+        },
+        {
+          "_value": "L",
+          "_name": "Triggered"
+        }
+      ]
+    },
+    {
+      "_name": "OrderStatus",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "New"
+        },
+        {
+          "_value": "1",
+          "_name": "Partially Filled"
+        },
+        {
+          "_value": "2",
+          "_name": "Filled"
+        },
+        {
+          "_value": "4",
+          "_name": "Cancelled"
+        },
+        {
+          "_value": "6",
+          "_name": "Expired"
+        },
+        {
+          "_value": "8",
+          "_name": "Rejected"
+        },
+        {
+          "_value": "9",
+          "_name": "Suspended"
+        }
+      ]
+    },
+    {
+      "_name": "ExecutedPrice",
+      "_length": "8",
+      "_type": "Price",
+      "_padding": 0
+    },
+    {
+      "_name": "ExecutedQuantity",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "LeavesQuantity",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "Container",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "None"
+        },
+        {
+          "_value": "1",
+          "_name": "Main"
+        },
+        {
+          "_value": "3",
+          "_name": "Market Order"
+        },
+        {
+          "_value": "5",
+          "_name": "Parked Order"
+        },
+        {
+          "_value": "6",
+          "_name": "Stop Order"
+        },
+        {
+          "_value": "20",
+          "_name": "Pegged Container"
+        },
+        {
+          "_value": "21",
+          "_name": "EOD Volume Auction Uncross"
+        }
+      ]
+    },
+    {
+      "_name": "SecurityID",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "Side",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "1",
+          "_name": "Buy"
+        },
+        {
+          "_value": "2",
+          "_name": "Sell"
+        }
+      ]
+    },
+    {
+      "_name": "TraderMnemonic",
+      "_length": "17",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "Account",
+      "_length": "10",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "IsMarketOpsRequest",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "No"
+        },
+        {
+          "_value": "1",
+          "_name": "Yes"
+        }
+      ]
+    },
+    {
+      "_name": "TransactTime",
+      "_length": "8",
+      "_type": "UInt64",
+      "_padding": 0
+    },
+    {
+      "_name": "OrderBook",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "1",
+          "_name": "Regular"
+        }
+      ]
+    },
+    {
+      "_name": "ExecutionInstruction",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "Do Not Exclude Hidden Orders"
+        },
+        {
+          "_value": "1",
+          "_name": "Exclude Pegged or Pegged Hidden Limit Orders"
+        },
+        {
+          "_value": "2",
+          "_name": "Include in EOD Volume Auction Uncross"
+        }
+      ]
+    },
+    {
+      "_name": "CrossID",
+      "_length": "20",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "CrossType",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0
+    },
+    {
+      "_name": "OrderType",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "1",
+          "_name": "Market Order"
+        },
+        {
+          "_value": "2",
+          "_name": "Limit Order"
+        },
+        {
+          "_value": "3",
+          "_name": "Stop Order"
+        },
+        {
+          "_value": "4",
+          "_name": "Stop Limit Order"
+        },
+        {
+          "_value": "50",
+          "_name": "Pegged"
+        },
+        {
+          "_value": "51",
+          "_name": "Pegged Limit Order"
+        }
+      ]
+    },
+    {
+      "_name": "TimeInForce",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "Day"
+        },
+        {
+          "_value": "1",
+          "_name": "Good Till Cancel (GTC)"
+        },
+        {
+          "_value": "3",
+          "_name": "Immediate or Cancel (IOC)"
+        },
+        {
+          "_value": "4",
+          "_name": "Fill or Kill (FOK)"
+        },
+        {
+          "_value": "5",
+          "_name": "At the Open (OFG)"
+        },
+        {
+          "_value": "6",
+          "_name": "Good Till Date (GTD)"
+        },
+        {
+          "_value": "8",
+          "_name": "Good Till Time (GTT)"
+        },
+        {
+          "_value": "9",
+          "_name": "Good for Auction (GFA)"
+        },
+        {
+          "_value": "50",
+          "_name": "Good for EOD Volume Auction Uncross (GDX)"
+        },
+        {
+          "_value": "51",
+          "_name": "Good for Intraday (GFX)"
+        },
+        {
+          "_value": "10",
+          "_name": "At the Close (ATC)"
+        },
+        {
+          "_value": "12",
+          "_name": "Closing Price Cross (CPX)"
+        },
+        {
+          "_value": "50",
+          "_name": "Good for EOD Volume Auction Uncorrss (GDX)"
+        }
+      ]
+    },
+    {
+      "_name": "ExpireTime",
+      "_length": "17",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "OrderQuantity",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "DisplayQuantity",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "MinimumQuantity",
+      "_length": "4",
+      "_type": "Int32",
+      "_padding": 0
+    },
+    {
+      "_name": "LimitPrice",
+      "_length": "8",
+      "_type": "Price",
+      "_padding": 0
+    },
+    {
+      "_name": "StopPrice",
+      "_length": "8",
+      "_type": "Price",
+      "_padding": 0
+    },
+    {
+      "_name": "Capacity",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "2",
+          "_name": "Principal"
+        },
+        {
+          "_value": "3",
+          "_name": "Agency"
+        }
+      ]
+    },
+    {
+      "_name": "CancelOnDisconnect",
+      "_length": 1,
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "Do Not Cancel"
+        },
+        {
+          "_value": "1",
+          "_name": "Cancel"
+        }
+      ]
+    },
+    {
+      "_name": "OrderSubType",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "50",
+          "_name": "OrdersPegged to Mid"
+        },
+        {
+          "_value": "51",
+          "_name": "Pegged to Bid"
+        },
+        {
+          "_value": "52",
+          "_name": "Pegged to Offer"
+        }
+      ]
+    },
+    {
+      "_name": "Status",
+      "_message": "N",
+      "_length": 1,
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "Request Accepted/Successful"
+        },
+        {
+          "_value": "1",
+          "_name": "Request Limit Reached"
+        },
+        {
+          "_value": "2",
+          "_name": "Invalid Partition ID"
+        },
+        {
+          "_value": "3",
+          "_name": "Service Unavailable"
+        }
+      ]
+    },
+    {
+      "_name": "Status",
+      "_message": "P",
+      "_length": 1,
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "0",
+          "_name": "All Messages Transmitted"
+        },
+        {
+          "_value": "1",
+          "_name": "Message Limit Reached"
+        },
+        {
+          "_value": "3",
+          "_name": "Service Unavailable"
+        }
+      ]
+    },
+    {
+      "_name": "OrigClientOrderID",
+      "_length": "20",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "MassCancelRequestType",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "3",
+          "_name": "All Firm orders for Instrument"
+        },
+        {
+          "_value": "4",
+          "_name": "All Firm orders for Segment"
+        },
+        {
+          "_value": "7",
+          "_name": "All orders for Client (Interface User ID)"
+        },
+        {
+          "_value": "8",
+          "_name": "All orders for Firm"
+        },
+        {
+          "_value": "9",
+          "_name": "Client (Interface User ID) orders for Instrument"
+        },
+        {
+          "_value": "15",
+          "_name": "Client (Interface User ID) orders for Segment"
+        }
+      ]
+    },
+    {
+      "_name": "Segment",
+      "_length": "6",
+      "_type": "Alpha",
+      "_padding": 0,
+      "_values": [
+        {
+          "_value": "ZA01",
+          "_name": "JSE Top Companies"
+        },
+        {
+          "_value": "ZA02",
+          "_name": "JSE Medium Liquid"
+        },
+        {
+          "_value": "ZA03",
+          "_name": "JSE Less Liquid"
+        },
+        {
+          "_value": "ZA04",
+          "_name": "JSE Specialist Products"
+        },
+        {
+          "_value": "ZA06",
+          "_name": "JSE Exchange Traded Products"
+        },
+        {
+          "_value": "ZA11",
+          "_name": "NSX Local Listed Companies"
+        },
+        {
+          "_value": "ZA12",
+          "_name": "NSX Dual Listed Companies"
+        }
+      ]
+    },
+    {
+      "_name": "BuySideClientOrderID",
+      "_length": "20",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "BuySideCapacity",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0
+    },
+    {
+      "_name": "BuySideTraderMnemonic",
+      "_length": "17",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "BuySideAccount",
+      "_length": "10",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "SellSideClientOrderID",
+      "_length": "20",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "SellSideCapacity",
+      "_length": "1",
+      "_type": "UInt8",
+      "_padding": 0
+    },
+    {
+      "_name": "SellSideTraderMnemonic",
+      "_length": "17",
+      "_type": "Alpha",
+      "_padding": 0
+    },
+    {
+      "_name": "SellSideAccount",
+      "_length": "10",
+      "_type": "Alpha",
+      "_padding": 0
+    }
+  ]
+}
