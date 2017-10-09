@@ -4,10 +4,12 @@ var dict = require('dict');
 var FixServer = require('nodefix').FixServer;
 var JseServer = require('nodejse');
 var fs = require('fs');
+var moment = require('moment');
 var dictPath = require("path").join(__dirname, "dict");
 var utils = require("./utils.js");
-var MitRuler = require('./ruler/mit.js');
-var JseDerivRuler = require('./ruler/jsederiv.js');
+var MitRuler = require('./ruler/mit/mit.js');
+var JseDerivRuler = require('./ruler/jsederiv/jsederiv.js');
+var Log = require('log');
 
 module.exports = MarketManager;
 
@@ -16,7 +18,7 @@ module.exports = MarketManager;
 /*==================================================*/
 function MarketManager(market) {
     var self = this;
-
+    var log = new Log('INFO');
     self.market = market;
     self.orders = [];
     self.trades = [];
@@ -38,7 +40,7 @@ function MarketManager(market) {
 
     var startJSEGateway = function(port, config, cb) {
         getDictionary(config.spec, function(err, dictionary) {
-            if (err) console.log(err);
+            if (err) log.error(err);
             else {
                 var accounts = JSON.parse(config.accounts);
 
@@ -46,49 +48,59 @@ function MarketManager(market) {
                 server.createServer(function(session) {
                     if (session) {
                         session.on('outmsg', function(outmsg) {
-                            console.log("["+port+"] OUT:" + JSON.stringify(outmsg));
-                            var options = session.getOptions(outmsg.account);
+                            var acct = outmsg.account;
+                            var message = outmsg.message;
+                            if (message['MsgType'] == "0")
+                                log.debug("- OUT\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            else
+                                log.info("- OUT\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            var options = session.getOptions(acct);
                             if (options != undefined) {
-                                self.sessionOptions.set(outmsg.account, options);
+                                self.sessionOptions.set(acct, options);
                             }
                         });
 
                         session.on('msg', function(msg) {
-                            console.log("["+port+"] IN:" +JSON.stringify(msg));
-                            var options = session.getOptions(msg.account);
+                            var acct = msg.account;
+                            var message = msg.message;
+                            if (message['MsgType'] == "0")
+                                log.debug("- IN\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            else
+                                log.info("- IN\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            var options = session.getOptions(acct);
                             if (options != undefined) {
-                                self.sessionOptions.set(msg.account, options);
+                                self.sessionOptions.set(acct, options);
                             }
-                            self.ruler.process('JSE', msg.message['MsgType'], session, msg);
+                            self.ruler.process('JSE', message['MsgType'], session, msg);
                         });
 
                         session.on('error', function(err) {
-                            console.log("["+port+"] ERROR:" + JSON.stringify(err));
-                        });
-
-                        session.on('create', function() {
-                            console.log("["+port+"] SOCKET CREATED");
-
+                            var acct = err.account;
+                            var error = err.message;
+                            log.error("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nERROR:"+error+"\r\n");
                         });
 
                         session.on('endsession', function(data) {
-                            console.log("["+port+"] SESSION ENDED");
+                            var acct = data.account;
+                            log.info("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nEND SESSION!\r\n");
                         });
 
                         session.on('close', function(data) {
-                            console.log("["+port+"] CONNECTION CLOSED");
+                            var acct = data.account;
+                            self.ruler.handleCancelOnDisconnect(acct);
+                            log.info("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nCONNECTION CLOSED!\r\n");
                         });
 
                         session.on('logon', function(msg) {
-                            console.log("["+port+"] LOGON:" + JSON.stringify(msg));
-                            var account = msg.account;
-                            if (self.sessionOptions.has(account)) {
-                                var options = self.sessionOptions.get(account);
+                            var acct = msg.account;
+                            log.info("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nLOGON!\r\n");
+                            if (self.sessionOptions.has(acct)) {
+                                var options = self.sessionOptions.get(acct);
                                 if (options != undefined) {
-                                    session.modifyBehavior(account, { 'outgoingSeqNum': options.outgoingSeqNum });
+                                    session.modifyBehavior(acct, { 'outgoingSeqNum': options.outgoingSeqNum });
                                 }
                             } else {
-                                self.sessionOptions.set(account, null);
+                                self.sessionOptions.set(acct, null);
                             }
                         });
                         cb(session);
@@ -110,45 +122,53 @@ function MarketManager(market) {
                 server.createServer(function(session) {
                     if (session) {
                         session.on('outmsg', function(outmsg) {
-                            console.log("["+port+"] OUT:" + JSON.stringify(outmsg));
-                            var options = session.getOptions(outmsg.account);
+                            var acct = outmsg.account;
+                            var message = outmsg.message;
+                            if (message['35'] == "0")
+                                log.debug("- OUT\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            else
+                                log.info("- OUT\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            var options = session.getOptions(acct);
                             if (options != undefined) {
-                                self.sessionOptions.set(outmsg.account, options);
+                                self.sessionOptions.set(acct, options);
                             }
                         });
 
                         session.on('msg', function(msg) {
-                            console.log("["+port+"] IN:" +JSON.stringify(msg));
-                            var options = session.getOptions(msg.account);
+                            var acct = msg.account;
+                            var message = msg.message;
+                            if (message['35'] == "0")
+                                log.debug("- IN\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            else
+                                log.info("- IN\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nMESSAGE:"+JSON.stringify(message)+"\r\n");
+                            var options = session.getOptions(acct);
                             if (options != undefined) {
-                                self.sessionOptions.set(msg.account, options);
+                                self.sessionOptions.set(acct, options);
                             }
-                            self.ruler.process('FIX', msg.message['35'], session, msg);
+                            self.ruler.process('FIX', message['35'], session, msg);
                         });
 
                         session.on('error', function(err) {
-                            console.log("["+port+"] ERROR:" + JSON.stringify(err.message));
+                            var acct = err.account;
+                            var error = err.message;
+                            log.error("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nERROR:"+error+"\r\n");
                         });
 
-                        session.on('create', function() {
-                            console.log("["+port+"] SOCKET CREATED");
-
-                        });
-
-                        session.on('close', function() {
-                            console.log("["+port+"] CONNECTION CLOSED");
+                        session.on('close', function(data) {
+                            var acct = data.account;
+                            log.info("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nCONNECTION CLOSED!\r\n");
                         });
 
                         session.on('logon', function(msg) {
-                            console.log("["+port+"] LOGON:" + JSON.stringify(msg));
-                            var account = msg.account;
-                            if (self.sessionOptions.has(account)) {
-                                var options = self.sessionOptions.get(account);
+                            var acct = msg.account;
+                            log.info("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nLOGON!\r\n");
+                            if (self.sessionOptions.has(acct)) {
+                                var options = self.sessionOptions.get(acct);
                                 if (options != undefined) {
-                                    session.modifyBehavior(account, { 'outgoingSeqNum': options.outgoingSeqNum });
+                                    session.modifyBehavior(acct, { 'outgoingSeqNum': options.outgoingSeqNum });
                                 }
                             } else {
-                                self.sessionOptions.set(account, null);
+                                self.sessionOptions.set(acct, null);
                             }
                         });
                         cb(session);
@@ -189,10 +209,10 @@ function MarketManager(market) {
     this.start = function(cb){
         switch(self.market.type) {
             case "MIT":
-                self.ruler = new MitRuler(self.market);
+                self.ruler = new MitRuler(self.market, log);
                 break;
             case "JSEDERIV":
-                self.ruler = new JseDerivRuler(self.market);
+                self.ruler = new JseDerivRuler(self.market, log);
                 break;
         }
 

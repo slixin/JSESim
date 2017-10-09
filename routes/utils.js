@@ -21,3 +21,7 @@ var randomString = exports.randomString = function(seed, length){
 
     return text;
 }
+
+var randomDouble = exports.randomDouble = function(min, max, round) {
+    return (Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min)).toFixed(round == undefined ? 2 : round);
+}

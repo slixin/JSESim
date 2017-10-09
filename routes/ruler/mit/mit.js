@@ -1,5 +1,5 @@
 var request = require('request');
-var utils = require('../utils.js');
+var utils = require('../../utils.js');
 var async = require('async');
 var dict = require('dict');
 var moment = require('moment');
