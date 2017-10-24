@@ -1682,7 +1682,8 @@ function JseDerivRuler(market, log) {
     // ************ Single Party ***************
     var newSinglePartyTCR = function(tcr) {
         if (parseInt(tcr.data["31"]) == 102) {
-            var origTradeTime = moment().subtract(1, 'days').format("YYYYMMDD-HH:mm:ss");
+            var daydiff = moment().isoWeekday() == 1 ? 3 : 1
+            var origTradeTime =  moment().subtract(daydiff, 'days').format("YYYYMMDD-HH:mm:ss");
             tcr.data["122"] = origTradeTime;
         }
 
