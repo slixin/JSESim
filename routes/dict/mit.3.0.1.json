@@ -415,6 +415,60 @@
       ]
     },
     {
+      "_type": "9",
+      "_name": "Order Cancel Reject",
+      "_fields": [
+        {
+          "_name": "PartitionId",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "SequenceNumber",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderID",
+          "_length": "12",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "TransactTime",
+          "_length": "8",
+          "_type": "UInt64",
+          "_padding": 0
+        },
+        {
+          "_name": "RejectCode",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderBook",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Regular"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "_type": "q",
       "_name": "Order Mass Cancel Request",
       "_fields": [
@@ -466,37 +520,7 @@
           "_name": "Segment",
           "_length": "6",
           "_type": "Alpha",
-          "_padding": 0,
-          "_values": [
-            {
-              "_value": "ZA01",
-              "_name": "JSE Top Companies"
-            },
-            {
-              "_value": "ZA02",
-              "_name": "JSE Medium Liquid"
-            },
-            {
-              "_value": "ZA03",
-              "_name": "JSE Less Liquid"
-            },
-            {
-              "_value": "ZA04",
-              "_name": "JSE Specialist Products"
-            },
-            {
-              "_value": "ZA06",
-              "_name": "JSE Exchange Traded Products"
-            },
-            {
-              "_value": "ZA11",
-              "_name": "NSX Local Listed Companies"
-            },
-            {
-              "_value": "ZA12",
-              "_name": "NSX Dual Listed Companies"
-            }
-          ]
+          "_padding": 0
         },
         {
           "_name": "OrderSubType",
@@ -527,6 +551,74 @@
             {
               "_value": "1",
               "_name": "Regular"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "r",
+      "_name": "Order Mass Cancel Report",
+      "_fields": [
+        {
+          "_name": "PartitionId",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "SequenceNumber",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "ClientOrderID",
+          "_length": "20",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Status",
+          "_length": 1,
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "0",
+              "_name": "Rejected"
+            },
+            {
+              "_value": "7",
+              "_name": "Accepted"
+            }
+          ]
+        },
+        {
+          "_name": "RejectCode",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "TransactTime",
+          "_length": "8",
+          "_type": "UInt64",
+          "_padding": 0
+        },
+        {
+          "_name": "OrderBook",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Regular"
+            },
+            {
+              "_value": "11",
+              "_name": "Negotiated Trades"
             }
           ]
         }

@@ -24,10 +24,11 @@
     "serve-favicon": "~2.3.0",
     "moment": "~2.14.1",
     "dict": "~1.4.0",
-    "nodefix": "~1.2.3",
+    "nodefix": "~1.2.7",
     "nodejse": "~1.0.5",
     "async": "~1.4.0",
     "csvtojson": "~1.1.7",
-    "log": "~1.4.0"
+    "log": "~1.4.0",
+    "moment-timezone": "~0.5.13"
   }
 }

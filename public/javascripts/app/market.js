@@ -196,8 +196,16 @@ app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notifi
 
     $scope.saveMarket = function() {
         $scope.market.createdtime = moment();
-        var market_data = JSON.stringify($scope.market);
-        var data = new Blob([market_data], { type: 'application/json;charset=utf-8' });
+        var market_data = {
+            "name": $scope.market.name,
+            "createdtime": moment(),
+            "description": $scope.market.description,
+            "type":$scope.market.type,
+            "instrument_file":$scope.market.instrument_file,
+            "parties":$scope.market.parties,
+            "gateways":$scope.market.gateways,
+        }
+        var data = new Blob([JSON.stringify(market_data)], { type: 'application/json;charset=utf-8' });
         FileSaver.saveAs(data, "mysetting.json");
     }
 
