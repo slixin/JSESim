@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var utils = require('./routes/utils.js');
 var routes = require('./routes/index');
 var market = require('./routes/market.js');
+var client = require('./routes/client.js');
 var dict = require('dict');
 
 var app = express();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/market', market);
+app.use('/client', client);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -35,6 +37,7 @@ app.use(function(req, res, next) {
 });
 
 global.market = null;
+global.client = null;
 
 // error handlers
 

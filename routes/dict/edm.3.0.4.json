@@ -2583,6 +2583,94 @@
           "_padding": 0
         }
       ]
+    },
+    {
+      "_type": "O",
+      "_name": "Security Definition Request",
+      "_fields": [
+        {
+          "_name": "SecurityRequestID",
+          "_length": "10",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "SecurityType",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0,
+          "_values": [
+            {
+              "_value": "1",
+              "_name": "Future"
+            },
+            {
+              "_value": "2",
+              "_name": "Call Option"
+            },
+            {
+              "_value": "3",
+              "_name": "Put Option"
+            },
+            {
+              "_value": "99",
+              "_name": "FwdFwd"
+            },
+            {
+              "_value": "100",
+              "_name": "Delta Option"
+            }
+          ]
+        },
+        {
+          "_name": "StrikePrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "MaturityDate",
+          "_length": "8",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "Reservedfield",
+          "_length": "1",
+          "_type": "UInt8",
+          "_padding": 0
+        },
+        {
+          "_name": "ReferenceInstrument",
+          "_length": "25",
+          "_type": "Alpha",
+          "_padding": 0
+        },
+        {
+          "_name": "ReferencePrice",
+          "_length": "8",
+          "_type": "Price",
+          "_padding": 0
+        },
+        {
+          "_name": "NearMonthType",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "FarMonthType",
+          "_length": "4",
+          "_type": "Int32",
+          "_padding": 0
+        },
+        {
+          "_name": "FarMaturityDate",
+          "_length": "8",
+          "_type": "Alpha",
+          "_padding": 0
+        }
+      ]
     }
   ],
   "fields": [

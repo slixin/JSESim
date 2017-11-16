@@ -8,7 +8,7 @@ var path = require('path');
 
 router.post('/', function(req, res, next) {
     if (global.market == null) {
-        res.status(400).send({ error: 'No Market be found'});
+        res.status(400).send({ error: 'No market is running'});
     } else {
         res.send(global.market.config);
     }
@@ -38,7 +38,7 @@ router.post('/news', function(req, res, next) {
     var userlist = req.body.userlist;
 
     if (global.market == undefined) {
-        res.status(400).send({ error: 'No Market be found'});
+        res.status(400).send({ error: 'No market is running'});
     } else {
         var marketManager = global.market.instance;
         var news = {
@@ -64,7 +64,7 @@ router.post('/reset', function(req, res, next) {
 
     var gt = null;
     if (global.market == undefined) {
-        res.status(400).send({ error: 'No Market be found'});
+        res.status(400).send({ error: 'No market is running'});
     } else {
         var marketManager = global.market.instance;
 
@@ -93,7 +93,7 @@ router.post('/start', function(req, res, next) {
     var market = req.body.market;
 
     if (market == null) {
-        res.status(400).send({ error: 'No Market be found'});
+        res.status(400).send({ error: 'Market is mandatory'});
     } else {
         var marketManager = new MarketManager(market);
         marketManager.start(function(err) {
@@ -109,7 +109,7 @@ router.post('/start', function(req, res, next) {
 
 router.post('/stop', function(req, res, next) {
     if (global.market == undefined) {
-        res.status(400).send({ error: 'No Market be found'});
+        res.status(400).send({ error: 'No market is running'});
     } else {
         var marketManager = global.market.instance;
         marketManager.stop(function(err) {

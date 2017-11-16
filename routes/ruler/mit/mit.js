@@ -1926,7 +1926,6 @@ function MITRuler(market, log) {
 
         clearInterval(timer_timing_orders);
         clearInterval(timer_stop_orders);
-        clearInterval(timer_ped_orders);
         cb();
     }
 }

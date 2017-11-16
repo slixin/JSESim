@@ -1,19 +1,39 @@
-app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notification', 'fileReader', 'FileSaver', 'Blob',
-    function($scope, $routeParams, $http, moment, Notification, fileReader, FileSaver, Blob) {
+app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notification', 'fileReader', 'FileSaver', 'Blob', '$uibModal',
+    function($scope, $routeParams, $http, moment, Notification, fileReader, FileSaver, Blob, $uibModal) {
     $scope.market = null;
 
-    $scope.markettypes = [
-        {value: 1, text: 'MIT'},
-        {value: 2, text: 'JSEDERIV'}
-    ];
+    var showForm = function (settings, callback) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'views/modal-settings.html',
+            controller: 'SettingsModalCtrl',
+            size: 'lg',
+            scope: $scope,
+            resolve: {
+                settingsForm: function () {
+                    return $scope.settingsForm;
+                },
+                settings: function() {
+                    if (settings != undefined)
+                        return settings;
+                    else
+                        return {};
+                }
+            }
+        });
+
+        modalInstance.result.then(function (result) {
+            callback(result);
+        }, null);
+    };
 
     $scope.new_mit_market = {
-        id: null,
-        createdtime : null,
-        name: "Untitled Market",
-        description: null,
-        type: 'MIT',
         isrunning: false,
+        createdtime : null,
+        type: "MIT",
+        name: "Untitled MIT Market",
+        description: null,
+        instrument_file: "mit.csv",
         parties: JSON.stringify([
             {
                 "trader":"PEREZA1XXX",
@@ -38,17 +58,12 @@ app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notifi
                         brokerid: "PEREZA1XXX"
                     },
                     {
-                        username: "PERN02",
+                        username: "PERN05",
                         password: "iress123",
                         brokerid: "PEREZA1XXX"
                     },
                     {
-                        username: "PYSN01",
-                        password: "iress123",
-                        brokerid: "PEREZA2CDS"
-                    },
-                    {
-                        username: "PYSN02",
+                        username: "PYSN06",
                         password: "iress123",
                         brokerid: "PEREZA2CDS"
                     }
@@ -71,19 +86,13 @@ app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notifi
                     },
                     {
                         senderID: "JSEDCPGW",
-                        targetID: "PERD02",
+                        targetID: "PERD05",
                         password: "iress123",
                         brokerid: "PEREZA1XXX"
                     },
                     {
                         senderID: "JSEDCPGW",
-                        targetID: "PYSD01",
-                        password: "iress123",
-                        brokerid: "PEREZA2CDS"
-                    },
-                    {
-                        senderID: "JSEDCPGW",
-                        targetID: "PYSD02",
+                        targetID: "PYSD06",
                         password: "iress123",
                         brokerid: "PEREZA2CDS"
                     }
@@ -108,7 +117,7 @@ app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notifi
                     },
                     {
                         senderID: "JSEPTPGW",
-                        targetID: "PERP02",
+                        targetID: "PERP05",
                         password: "iress123",
                         brokerid: "PEREZA1XXX",
                         trader: "80016",
@@ -116,15 +125,116 @@ app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notifi
                     },
                     {
                         senderID: "JSEPTPGW",
-                        targetID: "PYSP01",
+                        targetID: "PYSP06",
                         password: "iress123",
                         brokerid: "PEREZA2CDS",
                         trader: "80033",
                         tradergroup: "PYSRSTHER01"
+                    }
+                ])
+            }
+        }
+    }
+
+    $scope.new_edm_market = {
+        createdtime : null,
+        isrunning: false,
+        type: "JSEDERIV",
+        name: "Untitled JSEDERIV Market",
+        description: null,
+        instrument_file: "mit.csv",
+        parties: JSON.stringify([
+            {
+                "trader":"PEREZA1XXX",
+                "tradergroup":"80016",
+                "firm":"PERRSTHER01"
+            },
+            {
+                "trader":"PEREZA2CDS",
+                "tradergroup":"80033",
+                "firm":"PYSRSTHER01"
+            }
+        ]),
+        gateways : {
+            orderentry: {
+                spec: 'edm.3.0.4',
+                port: 41509,
+                recoveryport: 41510,
+                accounts: JSON.stringify([
+                    {
+                        username: "PERN01",
+                        password: "iress123",
+                        brokerid: "PEREZA1XXX"
+                    },
+                    {
+                        username: "PERN05",
+                        password: "iress123",
+                        brokerid: "PEREZA1XXX"
+                    },
+                    {
+                        username: "PYSN06",
+                        password: "iress123",
+                        brokerid: "PEREZA2CDS"
+                    }
+                ])
+            },
+            dropcopy: {
+                fixversion: 'FIXT.1.1',
+                spec: 'fix.5.0.2.edm',
+                port: 41561,
+                options: JSON.stringify({
+                    responseLogonExtensionTags: {"1137":"9","1409":"0"},
+                    responseLogoutExtensionTags:{"1409":"4"}
+                }),
+                accounts: JSON.stringify([
+                    {
+                        senderID: "JSEDCPGW",
+                        targetID: "PERD01",
+                        password: "iress123",
+                        brokerid: "PEREZA1XXX"
+                    },
+                    {
+                        senderID: "JSEDCPGW",
+                        targetID: "PERD05",
+                        password: "iress123",
+                        brokerid: "PEREZA1XXX"
+                    },
+                    {
+                        senderID: "JSEDCPGW",
+                        targetID: "PYSD06",
+                        password: "iress123",
+                        brokerid: "PEREZA2CDS"
+                    }
+                ])
+            },
+            posttrade:{
+                fixversion: 'FIXT.1.1',
+                spec: 'fix.5.0.2.edm',
+                port: 41581,
+                options: JSON.stringify({
+                    responseLogonExtensionTags: {"1137":"9","1409":"0"},
+                    responseLogoutExtensionTags:{"1409":"4"}
+                }),
+                accounts: JSON.stringify([
+                    {
+                        senderID: "JSEPTPGW",
+                        targetID: "PERP01",
+                        password: "iress123",
+                        brokerid: "PEREZA1XXX",
+                        trader: "80016",
+                        tradergroup: "PERRSTHER01"
                     },
                     {
                         senderID: "JSEPTPGW",
-                        targetID: "PYSP02",
+                        targetID: "PERP05",
+                        password: "iress123",
+                        brokerid: "PEREZA1XXX",
+                        trader: "80016",
+                        tradergroup: "PERRSTHER01"
+                    },
+                    {
+                        senderID: "JSEPTPGW",
+                        targetID: "PYSP06",
                         password: "iress123",
                         brokerid: "PEREZA2CDS",
                         trader: "80033",
@@ -167,6 +277,11 @@ app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notifi
         });
     }
 
+    var saveMarket = function() {
+        var data = new Blob([JSON.stringify($scope.market)], { type: 'application/json;charset=utf-8' });
+        FileSaver.saveAs(data, "mysetting.json");
+    }
+
     getMarket();
 
     $scope.getFile = function () {
@@ -184,29 +299,33 @@ app.controller('ctrlMarket', ['$scope','$routeParams', '$http', 'moment','Notifi
     };
 
     $scope.newMarket = function(type) {
+        var newmarket = null;
         switch(type) {
             case 'MIT':
-                $scope.market = angular.copy($scope.new_mit_market);
+                newmarket = angular.copy($scope.new_mit_market);
                 break;
             case 'JSEDERIV':
-                $scope.market = angular.copy($scope.new_edm_market);
+                newmarket = angular.copy($scope.new_edm_market);
                 break;
         }
+
+        showForm(newmarket, function(result){
+            if (result != undefined)
+            {
+                $scope.market = result;
+                saveMarket();
+            }
+        });
     }
 
-    $scope.saveMarket = function() {
-        $scope.market.createdtime = moment();
-        var market_data = {
-            "name": $scope.market.name,
-            "createdtime": moment(),
-            "description": $scope.market.description,
-            "type":$scope.market.type,
-            "instrument_file":$scope.market.instrument_file,
-            "parties":$scope.market.parties,
-            "gateways":$scope.market.gateways,
-        }
-        var data = new Blob([JSON.stringify(market_data)], { type: 'application/json;charset=utf-8' });
-        FileSaver.saveAs(data, "mysetting.json");
+    $scope.editMarket = function(market) {
+        showForm(market, function(result){
+            if (result != undefined)
+            {
+                $scope.market = result;
+                saveMarket();
+            }
+        });
     }
 
     $scope.startMarket = function(market) {

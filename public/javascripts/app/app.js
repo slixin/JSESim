@@ -2,13 +2,21 @@ var app = angular.module('app',['ngRoute', 'ui.bootstrap', 'angularMoment','ui-n
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        .when('/', {
+        .when('/market', {
             templateUrl: '/views/market.html',
             controller: 'ctrlMarket'
         })
+        .when('/newcode', {
+            templateUrl: '/views/newcode.html',
+            controller: 'ctrlNewCode'
+        })
+        .when('/logviewer', {
+            templateUrl: '/views/logviewer.html',
+            controller: 'ctrlLogViewer'
+        })
         .otherwise({
-            templateUrl: '/views/market.html',
-            controller: 'ctrlMarket'
+            templateUrl: '/views/main.html',
+            controller: 'ctrlMain'
         });
 }]);
 
@@ -78,4 +86,16 @@ var fileReader = function ($q, $log) {
 };
 
 app.factory("fileReader", ["$q", "$log", fileReader]);
+
+app.config(function(NotificationProvider) {
+    NotificationProvider.setOptions({
+        delay: 4000,
+        startTop: 0,
+        verticalSpacing: 20,
+        horizontalSpacing: 20,
+        replaceMessage: true,
+        positionX: 'center',
+        positionY: 'top'
+    });
+});
 

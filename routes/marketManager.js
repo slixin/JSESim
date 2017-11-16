@@ -2,7 +2,7 @@ var util = require('util');
 var net = require('net');
 var dict = require('dict');
 var FixServer = require('nodefix').FixServer;
-var JseServer = require('nodejse');
+var JseServer = require('nodejse').JseServer;
 var fs = require('fs');
 var moment = require('moment');
 var dictPath = require("path").join(__dirname, "dict");
@@ -31,15 +31,8 @@ function MarketManager(market) {
 
     self.sessionOptions = dict();
 
-    var getDictionary = function(dict_file_name, cb) {
-        fs.readFile(dictPath+'/'+dict_file_name+'.json', 'utf8', function (err, data) {
-            if (err) cb(err, null);
-            else cb(null, JSON.parse(data));
-        });
-    }
-
     var startJSEGateway = function(port, config, cb) {
-        getDictionary(config.spec, function(err, dictionary) {
+        utils.getDictionary(config.spec, function(err, dictionary) {
             if (err) log.error(err);
             else {
                 var accounts = JSON.parse(config.accounts);
@@ -78,11 +71,6 @@ function MarketManager(market) {
                             var acct = err.account;
                             var error = err.message;
                             log.error("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nERROR:"+error+"\r\n");
-                        });
-
-                        session.on('endsession', function(data) {
-                            var acct = data.account;
-                            log.info("\r\nPORT:"+port+"\r\nACCOUNT:"+acct+"\r\nEND SESSION!\r\n");
                         });
 
                         session.on('close', function(data) {
@@ -232,14 +220,18 @@ function MarketManager(market) {
         self.recovery.destroyConnection();
         self.dropcopy.destroyConnection();
         self.posttrade.destroyConnection();
-        self.orderentry = null;
-        self.recovery = null;
-        self.dropcopy = null;
-        self.posttrade = null;
-        self.ruler.clearIntervals(function() {
-            self.ruler = null;
-        });
-        cb();
+
+        setTimeout(function(){
+            self.orderentry = null;
+            self.recovery = null;
+            self.dropcopy = null;
+            self.posttrade = null;
+            self.ruler.clearIntervals(function() {
+                self.ruler = null;
+            });
+            cb();
+        }, 1000)
+
     }
 
     this.publishNews = function(news, cb) {

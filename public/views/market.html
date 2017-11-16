@@ -1,157 +1,31 @@
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-              <form class="form-inline">
-                <label class="btn btn-default btn-file" ng-disabled="market.isrunning">
-                    Browse <input type="file" class="file" style="display: none;" ng-file-select="onFileSelect($files)">
-                </label>
-                <button class="btn btn-info" ng-click="saveMarket(market)"  title="Save" ng-disabled="market.name == null || market.isrunning"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
-                <button class="btn btn-success" ng-click="startMarket(market)" title="Start" ng-disabled="market.name == null || market.isrunning"><i class="fa fa-play" aria-hidden="true"></i> Start</button>
-                <button class="btn btn-danger" ng-click="stopMarket(market)"  title="Stop" ng-disabled="!market.isrunning"><i class="fa fa-stop" aria-hidden="true"></i> Stop</button>
-                <div class="dropdown input-group" >
-                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" ng-disabled="market.isrunning">New Market
-                  <span class="caret"></span></button>
-                  <ul class="dropdown-menu">
-                    <li><a href="" ng-click="newMarket('MIT')">MIT</a></li>
-                    <li><a href="" ng-click="newMarket('JSEDERIV')">JSEDERIV</a></li>
-                  </ul>
-                </div>
-              </form>
-          </div>
-          <div class="panel-body">
-              <uib-tabset>
-                  <uib-tab id="tabSetting" index="0" heading="Settings">
-                    <div class="tab-container">
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse" data-target="#collapseInfo">Market Information</div>
-                          <div class="panel-body">
-                            <div id="collapseInfo" class="panel-collapse collapse out">
-                              <div class="form-group"">
-                                  <div class="form-group">
-                                    <label for="name">Name: </label>
-                                    <a href="#" editable-text="market.name" edit-disabled="{{market.isrunning}}">{{ market.name || 'empty' }}</a>
-                                  </div>
-                                  <div class="form-group"">
-                                    <label for="descr">Description: </label>
-                                    <a href="#" editable-textarea="market.description"  edit-disabled="{{market.isrunning}}" e-rows="2" e-cols="60">
-                                      <pre>{{ market.description || 'empty' }}</pre>
-                                    </a>
-                                  </div>
-                                </div>
-                                <div class="form-group"">
-                                  <label for="createdtime">Created Time: </label>
-                                  <span>{{market.createdtime || 'empty'}}</span>
-                                </div>
-                                <div class="form-group"">
-                                  <label for="createdtime">Exchange Type: </label>
-                                  <a href="#" editable-select="market.type" e-ng-options="mt.value as mt.text for mt in markettypes">
-                                      {{market.type || 'empty'}}
-                                  </a>
-                                </div>
-                                <div class="form-group">
-                                  <label>Parties: </label>
-                                  <a href="#" editable-textarea="market.parties" edit-disabled="{{market.isrunning}}" e-rows="8" e-cols="60">
-                                      <pre>{{ market.parties || 'empty' }}</pre>
-                                  </a>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse" data-target="#collapseOE">Order Entry Gateway</div>
-                          <div class="panel-body">
-                            <div id="collapseOE" class="panel-collapse collapse out">
-                              <div class="form-group">
-                                  <label>Spec: </label>
-                                  <a href="#" editable-text="market.gateways.orderentry.spec" edit-disabled="{{market.isrunning}}" >{{ market.gateways.orderentry.spec || 'empty' }}</a>
-                              </div>
-                              <div class="form-group"">
-                                  <label for="descr">Port: </label>
-                                  <a href="#" editable-text="market.gateways.orderentry.port" edit-disabled="{{market.isrunning}}" >{{ market.gateways.orderentry.port || 'empty' }}</a>
-                              </div>
-                              <div class="form-group"">
-                                  <label for="descr">Recovery Port: </label>
-                                  <a href="#" editable-text="market.gateways.orderentry.recoveryport" edit-disabled="{{market.isrunning}}" >{{ market.gateways.orderentry.recoveryport || 'empty' }}</a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Accounts: </label>
-                                  <a href="#" editable-textarea="market.gateways.orderentry.accounts" edit-disabled="{{market.isrunning}}" e-rows="8" e-cols="60">
-                                      <pre>{{ market.gateways.orderentry.accounts || 'empty' }}</pre>
-                                  </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse" data-target="#collapseDC">Drop Copy Gateway</div>
-                          <div class="panel-body">
-                            <div id="collapseDC" class="panel-collapse collapse out">
-                              <div class="form-group">
-                                  <label>FIX Version: </label>
-                                  <a href="#" editable-text="market.gateways.dropcopy.fixversion" edit-disabled="{{market.isrunning}}" >{{ market.gateways.dropcopy.fixversion || 'empty' }}</a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Spec: </label>
-                                  <a href="#" editable-text="market.gateways.dropcopy.spec" edit-disabled="{{market.isrunning}}" >{{ market.gateways.dropcopy.spec || 'empty' }}</a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Port: </label>
-                                  <a href="#" editable-text="market.gateways.dropcopy.port" edit-disabled="{{market.isrunning}}" >{{ market.gateways.dropcopy.port || 'empty' }}</a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Options: </label>
-                                  <a href="#" editable-textarea="market.gateways.dropcopy.options" edit-disabled="{{market.isrunning}}" e-rows="2" e-cols="60">
-                                      <pre>{{ market.gateways.dropcopy.options || 'empty' }}</pre>
-                                  </a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Accounts: </label>
-                                  <a href="#" editable-textarea="market.gateways.dropcopy.accounts" edit-disabled="{{market.isrunning}}" e-rows="8" e-cols="60">
-                                      <pre>{{ market.gateways.dropcopy.accounts || 'empty' }}</pre>
-                                  </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse" data-target="#collapsePT">Post Trade Gateway</div>
-                          <div class="panel-body">
-                            <div id="collapsePT" class="panel-collapse collapse out">
-                              <div class="form-group">
-                                  <label>FIX Version: </label>
-                                  <a href="#" editable-text="market.gateways.posttrade.fixversion" edit-disabled="{{market.isrunning}}" >{{ market.gateways.posttrade.fixversion || 'empty' }}</a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Spec: </label>
-                                  <a href="#" editable-text="market.gateways.posttrade.spec" edit-disabled="{{market.isrunning}}" >{{ market.gateways.posttrade.spec || 'empty' }}</a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Port: </label>
-                                  <a href="#" editable-text="market.gateways.posttrade.port" edit-disabled="{{market.isrunning}}" >{{ market.gateways.posttrade.port || 'empty' }}</a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Options: </label>
-                                  <a href="#" editable-textarea="market.gateways.posttrade.options" edit-disabled="{{market.isrunning}}" e-rows="2" e-cols="60">
-                                      <pre>{{ market.gateways.posttrade.options || 'empty' }}</pre>
-                                  </a>
-                              </div>
-                              <div class="form-group">
-                                  <label>Accounts: </label>
-                                  <a href="#" editable-textarea="market.gateways.posttrade.accounts" edit-disabled="{{market.isrunning}}" e-rows="8" e-cols="60">
-                                      <pre>{{ market.gateways.posttrade.accounts || 'empty' }}</pre>
-                                  </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </uib-tab>
-                  <uib-tab id="tabMonitor" index="1" heading="Monitor">
+<div class="row page-header">
+    <div ng-if="market.name == null" class="col-xs-8">
+        <span class="lead"><strong>Market Simulator</strong></span>
+    </div>
+    <div ng-if="market.name != null" class="col-xs-8">
+        <span class="lead"><strong><a href="" ng-click="editMarket(market)">{{market.name}}</a></strong></span>
+    </div>
+    <div class="col-xs-4 text-right">
 
-                  </uib-tab>
-              </uib-tabset>
+        <form class="form-inline">
+          <div class="dropdown input-group" >
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" ng-disabled="market.isrunning">Create
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="" ng-click="newMarket('MIT')">MIT</a></li>
+              <li><a href="" ng-click="newMarket('JSEDERIV')">JSEDERIV</a></li>
+            </ul>
           </div>
-        </div>
+          <label class="btn btn-default btn-file" ng-disabled="market.isrunning">
+              Load <input type="file" class="file" style="display: none;" ng-file-select="onFileSelect($files)">
+          </label>
+          <button class="btn btn-success" ng-click="startMarket(market)" title="Start" ng-disabled="market.name == null || market.isrunning"><i class="fa fa-play" aria-hidden="true"></i> Start</button>
+          <button class="btn btn-danger" ng-click="stopMarket(market)"  title="Stop" ng-disabled="!market.isrunning"><i class="fa fa-stop" aria-hidden="true"></i> Stop</button>
+
+        </form>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
     </div>
 </div>
