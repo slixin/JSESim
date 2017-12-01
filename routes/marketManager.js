@@ -99,7 +99,7 @@ function MarketManager(market) {
     }
 
     var startFixGateway = function(port, config, cb) {
-        getDictionary(config.spec, function(err, dictionary) {
+        utils.getDictionary(config.spec, function(err, dictionary) {
             if (err) cb(err, null);
             else {
                 var fixversion = config.fixversion;

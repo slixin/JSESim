@@ -256,11 +256,11 @@ function MITRuler(market, log) {
         var timing_orders = self.orders.filter(function(o) { return o.status != "CLOSED" && (parseInt(o.data.TimeInForce) == 6 || parseInt(o.data.TimeInForce) == 8) && (o.data.OrderStatus == 0 || o.data.OrderStatus == 1)});
         if (timing_orders.length > 0) {
             timing_orders.forEach(function(order) {
-                var expiretime = order.data.ExpireTime.substr(0,4)+'-'+order.data.ExpireTime.substr(4,2)+'-'+order.data.ExpireTime.substr(6,2)+' '+order.data.ExpireTime.substr(9,order.data.ExpireTime.length - 9);
-                var utc_expiretime = moment().utc(expiretime);
+                var expiretime = order.data.ExpireTime.substr(0,4)+'-'+order.data.ExpireTime.substr(4,2)+'-'+order.data.ExpireTime.substr(6,2)+'T'+order.data.ExpireTime.substr(9,order.data.ExpireTime.length - 9)+".000Z";
+                var utc_expiretime = moment.utc(expiretime);
                 var utc_now = moment.utc();
                 var time_diff = utc_expiretime.diff(utc_now, 'seconds');
-                if (time_diff == 0) { // Expired
+                if (time_diff <= 0) { // Expired
                     expireOrder(order, function(){});
                 }
             });
