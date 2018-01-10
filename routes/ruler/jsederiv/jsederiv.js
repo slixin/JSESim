@@ -621,28 +621,28 @@ function JseDerivRuler(market, log) {
             order.children.push(leg2_order);
         }
 
-        if (parseInt(order.data.OrderQuantity) > 999999999) {
-            order.data.RejectCode = "009901" // Invalid value in field
-            order.data.RejectReason = "Invalid value in field";
+        if (order.data.SecurityID == '0') {
+            order.data.RejectCode = "162002" // Instrument not found
+            order.data.RejectReason = "Instrument not found";
             rejectOrder(order, function() {});
             return;
         }
 
-        if (parseFloat(order.data.LimitPrice) == 0.9001 ) {
+        if (parseInt(order.data.OrderQuantity) > 999999999) {
+            order.data.RejectCode = "001003" // Invalid order size (> maximum size)
+            order.data.RejectReason = "Invalid order size (> maximum size)";
+            rejectOrder(order, function() {});
+            return;
+        }
+
+        if (parseFloat(order.data.LimitPrice) == 0.9001 || order.data.SecurityID == '1003104') {
             rejectAdmin(order.session, order.account, '009001', 'Unknown order book', order.data.MsgType, order.data.ClientOrderID, function() {});
             order.status = 'CLOSED';
             return;
         }
 
-        if (order.data.OrderType == 2 && parseInt(order.data.LimitPrice) < 0.1) {
-            order.data.RejectCode = "009901" // Invalid value in field
-            order.data.RejectReason = "Invalid value in field";
-            rejectOrder(order, function() {});
-            return;
-        }
-
-        if (order.data.SecurityID == '1003104') {
-            rejectAdmin(order.session, order.account, '009001', 'Unknown order book', order.data.MsgType, order.data.ClientOrderID, function() {});
+        if (order.data.OrderType == 2 && (parseInt(order.data.LimitPrice) < 0.1 || parseInt(order.data.OrderQuantity) == 0)) {
+            rejectAdmin(order.session, order.account, '009901', 'Invalid value in field', order.data.MsgType, order.data.ClientOrderID, function() {});
             order.status = 'CLOSED';
             return;
         }
@@ -685,7 +685,8 @@ function JseDerivRuler(market, log) {
             order.data.ExecutionType = "5";
 
             if (parseInt(order.data.OrderQuantity) > 999999999) {
-                order.data.RejectCode = "009901" // Invalid value in field
+                order.data.RejectCode = "001003" // Invalid order size (> maximum size)
+                order.data.RejectReason = "Invalid order size (> maximum size)";
                 rejectOrder(order, function() {});
                 return;
             }
@@ -698,6 +699,7 @@ function JseDerivRuler(market, log) {
 
             if (order.data.OrderType == 2 && parseFloat(order.data.LimitPrice) < 0.1) {
                 order.data.RejectCode = "009901" // Invalid value in field
+                order.data.RejectReason = "Invalid value in field";
                 rejectOrder(order, function() {});
                 return;
             }
