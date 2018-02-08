@@ -372,33 +372,26 @@ function MITRuler(market, log) {
         order.data.TransactTime = (((new Date).getTime()) / 1000).toFixed(3).toString();
         order.data.CumQuantity = 0;
         order.data.LeavesQuantity = order.data.OrderQuantity;
-        order.data.DisplayQuantity = order.data.OrderQuantity;
         order.data.OrderStatus = 0;
         order.data.Container = getContainer(order.data);
         order.data.ExecutionType = "0";
         order.data.OrderBook = 1;
         order.data.IsMarketOpsRequest = 0;
-        order.data.ExecutionInstruction = 0;
+        order.data.ExecutionInstruction = order.data.ExecutionInstruction == undefined ? 0 : parseInt(order.data.ExecutionInstruction);
         order.data.CrossID = order.data.CrossID == undefined ? '' : order.data.CrossID;
 
         self.orders.push(order);
 
-        if (parseInt(order.data.OrderQuantity) > 999999999) {
-            order.data.RejectCode = "009901" // Invalid value in field
-            order.data.RejectReason = "Invalid value in field";
+        if (parseFloat(order.data.LimitPrice) == 16.2) {
+            order.data.RejectCode = "162002" // Instrument not found
+            order.data.RejectReason = "Instrument not found";
             rejectOrder(order, function() {});
             return;
         }
 
-        if (parseFloat(order.data.LimitPrice) == 0.9001 ) {
-            rejectAdmin(order.session, order.account, '009001', 'Unknown order book', order.data.MsgType, order.data.ClientOrderID, function() {});
-            order.status = 'CLOSED';
-            return;
-        }
-
-        if (order.data.OrderType == 2 && parseInt(order.data.LimitPrice) < 0.1) {
-            order.data.RejectCode = "009901" // Invalid value in field
-            order.data.RejectReason = "Invalid value in field";
+        if (parseInt(order.data.OrderQuantity) > 999999999) {
+            order.data.RejectCode = "001003" // Invalid order size (> maximum size)
+            order.data.RejectReason = "Invalid order size (> maximum size)";
             rejectOrder(order, function() {});
             return;
         }
@@ -410,8 +403,14 @@ function MITRuler(market, log) {
             return;
         }
 
-        if (order.data.SecurityID == '1003104') {
+        if (parseFloat(order.data.LimitPrice) == 0.9001 || order.data.SecurityID == '1003104') {
             rejectAdmin(order.session, order.account, '009001', 'Unknown order book', order.data.MsgType, order.data.ClientOrderID, function() {});
+            order.status = 'CLOSED';
+            return;
+        }
+
+        if (order.data.OrderType == 2 && (parseFloat(order.data.LimitPrice) < 0.1 || parseInt(order.data.OrderQuantity) == 0)) {
+            rejectAdmin(order.session, order.account, '009901', 'Invalid value in field', order.data.MsgType, order.data.ClientOrderID, function() {});
             order.status = 'CLOSED';
             return;
         }
@@ -457,7 +456,8 @@ function MITRuler(market, log) {
             order.data.ExecutionType = "5";
 
             if (parseInt(order.data.OrderQuantity) > 999999999) {
-                order.data.RejectCode = "009901" // Invalid value in field
+                order.data.RejectCode = "001003" // Invalid order size (> maximum size)
+                order.data.RejectReason = "Invalid order size (> maximum size)";
                 rejectOrder(order, function() {});
                 return;
             }
@@ -468,8 +468,15 @@ function MITRuler(market, log) {
                 return;
             }
 
-            if (order.data.OrderType == 2 && parseFloat(order.data.LimitPrice) < 0.1) {
-                order.data.RejectCode = "009901" // Invalid value in field
+            if (order.data.OrderType == 2 && (parseFloat(order.data.LimitPrice) < 0.1 || parseInt(order.data.OrderQuantity) == 0)) {
+                rejectAdmin(order.session, order.account, '009901', 'Invalid value in field', order.data.MsgType, order.data.ClientOrderID, function() {});
+                order.status = 'CLOSED';
+                return;
+            }
+
+            if (order.data.ExecutionInstruction == 1 && parseFloat(order.data.LimitPrice).toFixed(4) == 13.4023) {
+                order.data.RejectCode = "134023" // Expiry time cannot be amended for EHL orders
+                order.data.RejectReason = "Expiry time cannot be amended for EHL orders";
                 rejectOrder(order, function() {});
                 return;
             }
@@ -710,7 +717,6 @@ function MITRuler(market, log) {
     var processLimitOrder = function(order) {
         var match_order_side = parseInt(order.data.Side) == 1 ? 2: 1;
         var matchingOrders = null;
-
         if (match_order_side == 1) {
             matchingOrders = self.orders.filter(function(o) {
                 return o.status != 'CLOSED' &&
@@ -751,6 +757,13 @@ function MITRuler(market, log) {
                 }
                 return ret;
             });
+        }
+        if (parseInt(order.data.ExecutionInstruction) == 1) {
+            matchingOrders = matchingOrders.filter(function(o) {
+                return parseInt(o.data.DisplayQuantity) > 0;
+            });
+            console.log(matchingOrders.length);
+            console.log(matchingOrders);
         }
         if (order.data.TimeInForce == 4) {//FOK
             matchingOrders = matchingOrders.filter(function(o) {

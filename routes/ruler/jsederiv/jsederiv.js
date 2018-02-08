@@ -621,7 +621,7 @@ function JseDerivRuler(market, log) {
             order.children.push(leg2_order);
         }
 
-        if (order.data.SecurityID == '0') {
+        if (parseFloat(order.data.LimitPrice) == 16.2) {
             order.data.RejectCode = "162002" // Instrument not found
             order.data.RejectReason = "Instrument not found";
             rejectOrder(order, function() {});
@@ -641,7 +641,7 @@ function JseDerivRuler(market, log) {
             return;
         }
 
-        if (order.data.OrderType == 2 && (parseInt(order.data.LimitPrice) < 0.1 || parseInt(order.data.OrderQuantity) == 0)) {
+        if (order.data.OrderType == 2 && (parseFloat(order.data.LimitPrice) < 0.1 || parseInt(order.data.OrderQuantity) == 0)) {
             rejectAdmin(order.session, order.account, '009901', 'Invalid value in field', order.data.MsgType, order.data.ClientOrderID, function() {});
             order.status = 'CLOSED';
             return;
@@ -733,6 +733,7 @@ function JseDerivRuler(market, log) {
                     rejectOrder(order, function() {});
                     return;
                 }
+
                 _send_native_message(template.native.execution_report, order);
                 _send_dropcopy_message(template.fix.dc_execution_report, order);
                 order.status = 'CLOSED';
@@ -1205,8 +1206,12 @@ function JseDerivRuler(market, log) {
             transactTime: order.data.TransactTime
         });
 
+        if (ordStatus == 1) {
+            order.status = "PARTIALLY_TRADED";
+        }
+
         if (ordStatus == 2) {
-            order.status = "CLOSED";
+            order.status = "FULLY_TRADED";
         }
     }
 
@@ -1307,13 +1312,10 @@ function JseDerivRuler(market, log) {
                 order.data.TradeReportStatus = 0;
                 order.data.MatchStatus = 1;
                 order.data.LeavesQuantity = parseInt(order.data.LeavesQuantity) + parseInt(trade.tradeQty);
-                order.data.ExecutedQuantity = 0;
                 order.data.ExecutionRefID = trade.execId;
-                order.data.ExecutedQuantity = null;
-                order.data.ExecutedPrice = null;
                 order.data.SecondaryOrderID = null;
                 order.data.MultiLegReportingType = 1;
-
+                           
                 order.trades.push({
                     execId: execId,
                     tradeId: order.data.TradeID,
@@ -1323,12 +1325,15 @@ function JseDerivRuler(market, log) {
                     tradeQty: (-1) * parseInt(order.data.ExecutedQuantity),
                     transactTime: order.data.TransactTime
                 });
-                order.status = "CLOSED";
 
                 _send_onbook_posttrade_message(template.fix.pt_onbook_trade_capture_report_ack, order);
                 _send_native_message(template.native.execution_report, order);
                 _send_onbook_posttrade_message(pt_message, order);
                 _send_dropcopy_message(template.fix.dc_execution_report, order);
+
+                if (order.data.OrderQuantity == order.data.LeavesQuantity) {
+                    processCancelOrder(order);
+                }
             }
         }
     }
@@ -1712,6 +1717,8 @@ function JseDerivRuler(market, log) {
         tcr.data.LastQty = tcr.data['32'];
         tcr.data.LastPx = tcr.data['31'];
         tcr.data.PriceType = 2;
+        tcr.data.Rate = tcr.data['27106'];
+        tcr.data.StartCash = tcr.data['921'];
         _confirm_tcr(tcr, template.fix.pt_offbook_trade_capture_report_trade, 0, ['22']);
 
         tcr.status = "TRADED";
@@ -1764,6 +1771,8 @@ function JseDerivRuler(market, log) {
         tcr.data.PriceType = 2;
         tcr.data.NotifyTradeReportType = 11;
         tcr.data.NotifyTradeReportTransType = 0;
+        tcr.data.Rate = tcr.data['27106'];
+        tcr.data.StartCash = tcr.data['921'];
         _notify_tcr(tcr, template.fix.pt_offbook_trade_capture_report_notify, ['22']);
 
         tcr.status = "NOTIFIED_CREATE";

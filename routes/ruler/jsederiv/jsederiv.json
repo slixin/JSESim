@@ -169,7 +169,9 @@
       "31": "%%@ExecutedPrice%%",
       "574": "%%@MatchType%%",
       "48": "%%@SecurityID%%",
-      "442": "%%@MultiLegReportingType%%"
+      "442": "%%@MultiLegReportingType%%",
+      "27106":"%%@Rate%%",
+      "921": "%%@StartCash%%"
     },
     "pt_onbook_trade_capture_report_ack": {
       "35": "AR",
@@ -180,7 +182,9 @@
       "487": "%%@TradeReportTransType%%",
       "573": "%%@MatchStatus%%",
       "60": "%%exp[moment.utc(parseFloat(@TransactTime)*1000).format('YYYYMMDD-HH:mm:ss.SSS')]%%",
-      "48": "%%@SecurityID%%"
+      "48": "%%@SecurityID%%",
+      "27106":"%%@Rate%%",
+      "921": "%%@StartCash%%"
     },
     "pt_offbook_trade_capture_report_ack": {
       "35": "AR",
@@ -200,7 +204,9 @@
       "64": "%%@64%%",
       "32": "%%@32%%",
       "31": "%%@31%%",
-      "1390": "%%@1390%%"
+      "1390": "%%@1390%%",
+      "27106":"%%@Rate%%",
+      "921": "%%@StartCash%%"
     },
     "pt_offbook_trade_capture_report_trade": {
       "35": "AE",
@@ -229,7 +235,9 @@
       "64": "%%@64%%",
       "423": "%%@PriceType%%",
       "1227": "%%@ProductComplex%%",
-      "15": "ZAR"
+      "15": "ZAR",
+      "27106":"%%@Rate%%",
+      "921": "%%@StartCash%%"
     },
     "pt_offbook_trade_capture_report_notify": {
       "35": "AE",
@@ -248,7 +256,9 @@
       "32": "%%@LastQty%%",
       "31": "%%@LastPx%%",
       "64": "%%@64%%",
-      "1390": "%%@1390%%"
+      "1390": "%%@1390%%",
+      "27106":"%%@Rate%%",
+      "921": "%%@StartCash%%"
     },
     "pt_offbook_trade_capture_report_request_ack": {
       "35": "AQ",
@@ -257,7 +267,9 @@
       "569": "0",
       "750": "0",
       "749": "0",
-      "748": "%%@748%%"
+      "748": "%%@748%%",
+      "27106":"%%@Rate%%",
+      "921": "%%@StartCash%%"
     }
   }
 }
